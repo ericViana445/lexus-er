@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produção - Tema Proposto</title>
+  <style>
+    /* Mesmo estilo da tela podcast.html */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    .navbar {
+      background-color: #3c2a7c;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-img {
+      height: 40px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .nav-links a:hover {
+      background-color: #2d1e63;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 40px;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .left-panel {
+      flex: 1 1 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .left-panel h2 {
+      font-size: 24px;
+      color: #3c2a7c;
+    }
+
+    input[type="text"] {
+      padding: 15px;
+      border-radius: 12px;
+      border: 2px solid #3c2a7c;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    textarea {
+      padding: 20px;
+      border-radius: 12px;
+      border: 2px solid #3c2a7c;
+      width: 100%;
+      height: 480px;
+      font-size: 16px;
+      resize: vertical;
+    }
+
+    .word-count {
+      text-align: right;
+      font-size: 14px;
+      color: #666;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    .upload-box {
+      flex: 0 1 280px;
+      background-color: white;
+      border: 2px dashed #3c2a7c;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .upload-box input[type="file"] {
+      display: none;
+    }
+
+    .upload-label {
+      display: block;
+      cursor: pointer;
+      padding: 20px 5px;
+      color: #3c2a7c;
+      text-align: center;
+    }
+
+    .upload-preview {
+      margin-top: 10px;
+      max-width: 100%;
+      max-height: 120px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    audio.upload-preview {
+      max-height: 80px;
+    }
+
+    .btn-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .btn-enviar {
+      background-color: #3c2a7c;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.3s;
+    }
+
+    .btn-enviar:hover {
+      background-color: #2d1e63;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .upload-box {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="/">
+      <img src="images/lexus.png" alt="Logo Lexus" class="logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="#">Produzir</a>
+      <a href="#">Chat</a>
+      <a href="#">Perfil</a>
+      <a href="#">Sair</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="left-panel">
+      <h2>Produção<br><small style="font-size:16px;color:#777">Temática: Tema Proposto - Atualidades</small></h2>
+      <input 
+        type="text" 
+        placeholder="Adicione um tema se quiser..." 
+        value="O impacto das redes sociais na saúde mental dos jovens"
+      >
+      <textarea id="textoRedacao" placeholder="Digite aqui seu texto..."></textarea>
+      <div class="word-count" id="contadorPalavras">0 palavras</div>
+      <div class="btn-wrapper">
+        <button class="btn-enviar" onclick="enviarRedacao()">Enviar</button>
+      </div>
+    </div>
+
+    <div class="upload-box">
+      <label for="upload" class="upload-label">
+        <strong>🎙️</strong><br>
+        Upload do áudio
+      </label>
+      <input type="file" id="upload" accept="audio/*" onchange="mostrarPreview(event)">
+      <audio id="preview" class="upload-preview" controls></audio>
+    </div>
+  </div>
+
+  <script>
+    function mostrarPreview(event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById("preview");
+      if (file) {
+        const url = URL.createObjectURL(file);
+        preview.src = url;
+        preview.style.display = "block";
+      } else {
+        preview.src = "";
+        preview.style.display = "none";
+      }
+    }
+
+    function enviarRedacao() {
+      alert("Redação enviada com sucesso!");
+    }
+
+    const texto = document.getElementById("textoRedacao");
+    const contador = document.getElementById("contadorPalavras");
+
+    texto.addEventListener("input", () => {
+      const palavras = texto.value.trim().split(/\s+/).filter(p => p !== "");
+      contador.textContent = `${palavras.length} palavra${palavras.length !== 1 ? 's' : ''}`;
+    });
+  </script>
+
+</body>
+</html>

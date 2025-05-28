@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Letrus - Código</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #226680;
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      display: flex;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 90%;
+      max-width: 1000px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .left {
+      background-color: #3c2a7c;
+      color: white;
+      flex: 1;
+      padding: 40px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .left .aluna-img {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      max-height: 75%;
+    }
+
+    .right {
+      background: white;
+      flex: 1;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .logo-img {
+      width: 130px;
+      margin: 0 auto 30px;
+    }
+
+    .google-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      padding: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      gap: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .google-button img {
+      width: 20px;
+    }
+
+    .divider {
+      height: 1px;
+      background: #eee;
+      margin-bottom: 20px;
+    }
+
+    label, .codigo-section label {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    .disabled-button {
+      width: 100%;
+      background: #ddd;
+      border: none;
+      padding: 10px;
+      border-radius: 25px;
+      color: #999;
+      cursor: not-allowed;
+      margin-bottom: 20px;
+    }
+
+    .enabled-button {
+      width: 100%;
+      background: #3c2a7c;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background 0.3s;
+    }
+
+    .enabled-button:hover {
+      background: #2d1e63;
+    }
+
+    .link-codigo {
+      font-size: 14px;
+      color: #3c2a7c;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .link-codigo:hover {
+      text-decoration: underline;
+    }
+
+    .codigo-section {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .success-message {
+      color: green;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .error-message {
+      color: red;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left, .right {
+        flex: none;
+        width: 100%;
+      }
+
+      .left .aluna-img {
+        position: relative;
+        transform: none;
+        left: auto;
+        bottom: auto;
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="left">
+       <h2 class="left-phrase">Bem-vindo, Estudante! Prepare-se para transformar o aprendizado.</h2>
+      <img class="aluna-img" src="images/aluna.png" alt="Imagem Aluna" />
+    </div>
+
+    <div class="right">
+      <img class="logo-img" src="images/lexus.png" alt="Logo Lexus" />
+
+      <button class="google-button">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+        Continuar com Google
+      </button>
+
+      <div class="divider"></div>
+
+      <label for="email">Usuário ou e-mail</label>
+      <input type="email" id="email" placeholder="Digite seu usuário ou e-mail" />
+
+      <button class="disabled-button" disabled>Entrar</button>
+
+      <a class="link-codigo" id="mostrarCodigo">🔐 Cadastrar com código</a>
+
+      <div class="codigo-section" id="codigoSection">
+        <label for="codigo">Código de acesso</label>
+        <input type="text" id="codigo" placeholder="Digite seu código" />
+        <button id="botaoCadastrar" class="disabled-button" disabled>Cadastrar</button>
+        <p class="success-message" id="mensagemSucesso" style="display: none;">✅ Código válido! Conta cadastrada.</p>
+        <p class="error-message" id="mensagemErro" style="display: none;">❌ Código inválido. Tente novamente.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mostrar seção do código
+    document.getElementById("mostrarCodigo").addEventListener("click", () => {
+      document.getElementById("codigoSection").style.display = "block";
+    });
+
+    // Ativar botão quando o campo de código for preenchido
+    const codigoInput = document.getElementById("codigo");
+    const botaoCadastrar = document.getElementById("botaoCadastrar");
+
+    codigoInput.addEventListener("input", () => {
+      if (codigoInput.value.trim() !== "") {
+        botaoCadastrar.disabled = false;
+        botaoCadastrar.classList.remove("disabled-button");
+        botaoCadastrar.classList.add("enabled-button");
+      } else {
+        botaoCadastrar.disabled = true;
+        botaoCadastrar.classList.remove("enabled-button");
+        botaoCadastrar.classList.add("disabled-button");
+      }
+    });
+
+    // Verificar código
+    botaoCadastrar.addEventListener("click", function () {
+      const codigo = codigoInput.value.trim();
+      const sucesso = document.getElementById("mensagemSucesso");
+      const erro = document.getElementById("mensagemErro");
+
+      sucesso.style.display = "none";
+      erro.style.display = "none";
+
+      if (codigo === "ABC123") {
+        sucesso.style.display = "block";
+      } else {
+        erro.style.display = "block";
+      }
+    });
+  </script>
+
+</body>
+</html>
