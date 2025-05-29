@@ -19,20 +19,21 @@
 
     .navbar {
       background-color: #226680;
-      padding: 15px 30px;
+      padding: 5px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .logo-img {
-      height: 40px;
+      height: 90px;
     }
 
     .nav-links {
       display: flex;
       gap: 25px;
       align-items: center;
+      position: relative;
     }
 
     .nav-links a {
@@ -47,6 +48,20 @@
 
     .nav-links a:hover {
       background-color:  #164253;
+    }
+
+    .perfil-foto {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid white;
+      transition: transform 0.3s;
+    }
+
+    .perfil-foto:hover {
+      transform: scale(1.05);
     }
 
     .dropdown, .dropdown-producao {
@@ -79,6 +94,22 @@
     .dropdown p {
       font-size: 14px;
       margin-bottom: 6px;
+    }
+
+    .sair-btn {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.3s;
+    }
+
+    .sair-btn:hover {
+      background-color: #c0392b;
     }
 
     .dropdown-producao button {
@@ -197,14 +228,14 @@
     <div class="nav-links">
       <a id="produzirBtn">Produzir</a>
       <a href="chat-aluno.html">Chat</a>
-      <a id="perfilBtn">Perfil</a>
-      <a href="#">Sair</a>
+      <img id="perfilBtn" src="images/perfil1.png" alt="Foto do usuário" class="perfil-foto">
 
       <div class="dropdown" id="perfilDropdown">
         <h3>👤 Meu Perfil</h3>
         <p><strong>Nome:</strong> Maria Eduarda</p>
         <p><strong>E-mail:</strong> maria.eduarda@escola.com</p>
         <p><strong>Turma:</strong> 9º A</p>
+        <button onclick="window.location.href='index.html'" class="sair-btn">🚪 Sair</button>
       </div>
 
       <div class="dropdown-producao" id="produzirDropdown">
@@ -267,7 +298,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <script>
