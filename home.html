@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Home Professor - Lexus</title>
   <style>
     * {
@@ -12,7 +12,7 @@
     }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f4f6fa;
       color: #333;
     }
@@ -33,6 +33,7 @@
       display: flex;
       gap: 25px;
       align-items: center;
+      position: relative;
     }
 
     .nav-links a {
@@ -98,14 +99,14 @@
     }
 
     .container {
-      padding: 50px 30px;
       max-width: 1300px;
-      margin: auto;
+      margin: 40px auto 60px auto;
+      padding: 0 30px;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       font-size: 32px;
       color: #3c2a7c;
     }
@@ -114,6 +115,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
       gap: 30px;
+      margin-bottom: 60px;
     }
 
     .card {
@@ -122,6 +124,9 @@
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
     }
 
     .card:hover {
@@ -134,10 +139,15 @@
       height: 220px;
       object-fit: cover;
       display: block;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
     }
 
     .card-content {
       padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .tag {
@@ -149,6 +159,7 @@
       font-size: 13px;
       font-weight: bold;
       margin-bottom: 12px;
+      align-self: flex-start;
     }
 
     .card h3 {
@@ -173,6 +184,84 @@
       font-size: 16px;
       color: #444;
       line-height: 1.6;
+      flex-grow: 1;
+    }
+
+    /* Botão Avaliar */
+    .btn-avaliar {
+      background-color: #3c2a7c;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 15px;
+      align-self: flex-start;
+      transition: background-color 0.3s;
+      user-select: none;
+    }
+
+    .btn-avaliar:hover {
+      background-color: #2d1e63;
+    }
+
+    /* Lista de alunos */
+    .alunos-container {
+      max-width: 1300px;
+      margin: 0 auto 60px auto;
+      padding: 0 30px;
+    }
+
+    .alunos-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .aluno-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 220px;
+      padding: 15px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .aluno-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 12px;
+      border: 2px solid #3c2a7c;
+    }
+
+    .aluno-nome {
+      font-weight: 600;
+      color: #3c2a7c;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .btn-msg {
+      background-color: #3c2a7c;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+      margin-top: auto;
+    }
+
+    .btn-msg:hover {
+      background-color: #2d1e63;
     }
 
     @media (max-width: 600px) {
@@ -186,6 +275,10 @@
       .dropdown, .dropdown-producao {
         right: 30px;
         left: auto;
+      }
+
+      .alunos-list {
+        justify-content: center;
       }
     }
   </style>
@@ -216,41 +309,23 @@
   </div>
 
   <div class="container">
-    <h1>Mural de Produções</h1>
+    <h1>Mural de Destaques Nota 1000</h1>
+    <div class="mural" id="destaquesMural">
+      <!-- Destaques nota mil (2 redações) via JS -->
+    </div>
+  </div>
 
-    <div class="mural">
-      <div class="card">
-        <img src="images/exempo1.jpg" alt="Meu Lugar Favorito">
-        <div class="card-content">
-          <span class="tag">📍 Lugar</span>
-          <h3>Meu Lugar Favorito</h3>
-          <div class="autor">por Maria Eduarda</div>
-          <div class="data">27 de Maio de 2025</div>
-          <p>Gosto de visitar a praça perto de casa, onde posso brincar, ler e conversar com amigos. É um espaço que me faz sentir em paz.</p>
-        </div>
-      </div>
+  <div class="container">
+    <h1>Mural de Todas as Redações Publicadas</h1>
+    <div class="mural" id="todasRedacoesMural">
+      <!-- Mural completo com 4 redações (2 destaques + 2 aleatórias) via JS -->
+    </div>
+  </div>
 
-      <div class="card">
-        <img src="images/exempo2.jpg" alt="Podcast Som da Cidade">
-        <div class="card-content">
-          <span class="tag">🎧 Podcast</span>
-          <h3>O som da minha cidade</h3>
-          <div class="autor">por Lucas Oliveira</div>
-          <div class="data">25 de Maio de 2025</div>
-          <p>Gravei um podcast sobre os sons que mais escuto: o apito do trem, os cachorros e a feira de domingo. Um retrato sonoro da minha comunidade.</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="images/exempo3.jpg" alt="Pôr do sol">
-        <div class="card-content">
-          <span class="tag">🌇 Fotografia</span>
-          <h3>Foto do pôr do sol</h3>
-          <div class="autor">por Ana Beatriz</div>
-          <div class="data">22 de Maio de 2025</div>
-          <p>Capturei uma imagem linda do céu alaranjado no fim da tarde. Tentei mostrar o contraste da natureza com os prédios ao fundo.</p>
-        </div>
-      </div>
+  <div class="alunos-container">
+    <h1>Alunos Registrados na Sala</h1>
+    <div class="alunos-list" id="alunosList">
+      <!-- Alunos via JS -->
     </div>
   </div>
 
@@ -280,6 +355,158 @@
         produzirDropdown.style.display = "none";
       }
     });
+
+    // Dados das redações
+    const redacoes = [
+      {
+        id: "r1",
+        tipo: "📝 Redação",
+        titulo: "A importância da leitura",
+        autor: "Ana Beatriz",
+        data: "15 de Maio de 2025",
+        texto: "A leitura abre portas para o conhecimento e nos ajuda a entender melhor o mundo ao nosso redor.",
+        imagem: "images/exempo7.jpg",
+      },
+      {
+        id: "r2",
+        tipo: "📝 Redação",
+        titulo: "Meus sonhos para o futuro",
+        autor: "João Pedro",
+        data: "10 de Maio de 2025",
+        texto: "Quero ser engenheiro para construir pontes e ajudar minha cidade a crescer de forma sustentável.",
+        imagem: "images/exempo8.jpg",
+      },
+      {
+        id: "r3",
+        tipo: "📝 Redação",
+        titulo: "A importância da amizade",
+        autor: "Mariana Costa",
+        data: "20 de Maio de 2025",
+        texto: "Amigos são importantes para nos apoiar, divertir e crescer juntos, tornando a vida mais feliz.",
+        imagem: "images/exempo9.jpg",
+      },
+      {
+        id: "r4",
+        tipo: "📝 Redação",
+        titulo: "Como preservar o meio ambiente",
+        autor: "Carlos Mendes",
+        data: "18 de Maio de 2025",
+        texto: "Cuidar da natureza é fundamental para garantir um futuro saudável para as próximas gerações.",
+        imagem: "images/exempo10.jpg",
+      },
+      {
+        id: "r5",
+        tipo: "📝 Redação",
+        titulo: "Minha cidade natal",
+        autor: "Juliana Freitas",
+        data: "12 de Maio de 2025",
+        texto: "Minha cidade tem lugares incríveis para visitar e pessoas muito acolhedoras.",
+        imagem: "images/exempo11.jpg",
+      },
+    ];
+
+    // IDs das 2 redações destaque nota 1000
+    const destaques = redacoes.filter(r => r.id === "r1" || r.id === "r3");
+
+    // Redações que não são destaques
+    const naoDestaques = redacoes.filter(r => r.id !== "r1" && r.id !== "r3");
+
+    // Função para embaralhar array (Fisher-Yates)
+    function shuffle(array) {
+      for(let i = array.length -1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i +1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Pegar 2 aleatórias dentre as não destaques
+    const aleatorias = shuffle(naoDestaques).slice(0, 2);
+
+    // Mural completo com destaques + aleatórias
+    const muralCompleto = [...destaques, ...aleatorias];
+
+    // Função para criar card HTML de uma redação
+    function criarCard(redacao, comBotaoAvaliar = false) {
+      return `
+      <div class="card">
+        <img src="${redacao.imagem}" alt="Imagem da redação ${redacao.titulo}" />
+        <div class="card-content">
+          <div class="tag">${redacao.tipo}</div>
+          <h3>${redacao.titulo}</h3>
+          <div class="autor"><strong>Autor:</strong> ${redacao.autor}</div>
+          <div class="data"><strong>Data:</strong> ${redacao.data}</div>
+          <p>${redacao.texto}</p>
+          ${comBotaoAvaliar ? `<button class="btn-avaliar" onclick="avaliarRedacao('${redacao.id}')">Avaliar</button>` : ""}
+        </div>
+      </div>`;
+    }
+
+    // Inserir cards no mural de destaques (sem botão avaliar)
+    const destaquesMural = document.getElementById("destaquesMural");
+    destaques.forEach(r => {
+      destaquesMural.innerHTML += criarCard(r, false);
+    });
+
+    // Inserir cards no mural completo (com botão avaliar)
+    const todasRedacoesMural = document.getElementById("todasRedacoesMural");
+    muralCompleto.forEach(r => {
+      todasRedacoesMural.innerHTML += criarCard(r, true);
+    });
+
+    // Dados dos alunos
+    const alunos = [
+      {
+        id: "aluno1",
+        nome: "Maria Eduarda",
+        foto: "images/aluno1.jpg",
+      },
+      {
+        id: "aluno2",
+        nome: "Lucas Oliveira",
+        foto: "images/aluno2.jpg",
+      },
+      {
+        id: "aluno3",
+        nome: "Pedro Santos",
+        foto: "images/aluno3.jpg",
+      },
+      {
+        id: "aluno4",
+        nome: "Carla Almeida",
+        foto: "images/aluno4.jpg",
+      },
+      {
+        id: "aluno5",
+        nome: "Rafael Lima",
+        foto: "images/aluno5.jpg",
+      },
+    ];
+
+    const alunosList = document.getElementById("alunosList");
+
+    alunos.forEach((aluno) => {
+      const card = document.createElement("div");
+      card.className = "aluno-card";
+      card.innerHTML = `
+        <img src="${aluno.foto}" alt="Foto do aluno ${aluno.nome}" />
+        <div class="aluno-nome">${aluno.nome}</div>
+        <button class="btn-msg" onclick="abrirChat('${aluno.nome}')">Enviar mensagem</button>
+      `;
+      alunosList.appendChild(card);
+    });
+
+    function abrirChat(nomeAluno) {
+      // Redirecionar para chat.html com query param nomeAluno
+      const url = new URL(window.location.origin + "/chat.html");
+      url.searchParams.set("aluno", nomeAluno);
+      window.location.href = url.toString();
+    }
+
+    function avaliarRedacao(id) {
+      alert(`Avaliar redação: ${id}`);
+      // Aqui pode abrir modal ou redirecionar para página de avaliação, etc.
+    }
   </script>
 
 </body>
