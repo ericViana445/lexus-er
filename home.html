@@ -19,14 +19,14 @@
 
     .navbar {
       background-color: #226680;
-      padding: 15px 30px;
+      padding: 5px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .logo-img {
-      height: 40px;
+      height: 90px;
     }
 
     .nav-links {
@@ -49,6 +49,36 @@
     .nav-links a:hover {
       background-color: #164253;
     }
+    .perfil-foto {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid white;
+  transition: transform 0.3s;
+}
+
+.perfil-foto:hover {
+  transform: scale(1.05);
+}
+
+.sair-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.3s;
+}
+
+.sair-btn:hover {
+  background-color: #c0392b;
+}
+
 
     .dropdown, .dropdown-producao {
       position: absolute;
@@ -280,30 +310,28 @@
       .alunos-list {
         justify-content: center;
       }
+     
     }
   </style>
 </head>
 <body>
 
   <div class="navbar">
-    <img src="images/lexus.png" alt="Logo Lexus" class="logo-img" />
-    <div class="nav-links">
-      
-      <a href="chat.html">Chat</a>
-      <a id="perfilBtn">Perfil</a>
-      <a href="#">Sair</a>
+  <img src="images/lexus.png" alt="Logo Lexus" class="logo-img" />
+  <div class="nav-links">
+    <a href="chat.html">Chat</a>
+    
+    <img src="images/perfil2.png" alt="Foto de perfil" id="perfilBtn" class="perfil-foto" />
 
-      <div class="dropdown" id="perfilDropdown">
-        <h3>👤 Perfil do Professor</h3>
-        <p><strong>Nome:</strong> João da Silva</p>
-        <p><strong>E-mail:</strong> joao.professor@escola.com</p>
-        <p><strong>Código:</strong> ABC123</p>
-      </div>
-
-      
-      </div>
+    <div class="dropdown" id="perfilDropdown">
+      <h3>👤 Perfil do Professor</h3>
+      <p><strong>Nome:</strong> João da Silva</p>
+      <p><strong>E-mail:</strong> joao.professor@escola.com</p>
+      <p><strong>Código:</strong> ABC123</p>
+      <button onclick="window.location.href='index.html'" class="sair-btn">🚪 Sair</button>
     </div>
   </div>
+</div>
 
   <div class="container">
     <h1>Mural de Destaques Nota 1000</h1>
