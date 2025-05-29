@@ -204,9 +204,17 @@
       <a class="link-codigo" id="mostrarCodigo">🔐 Cadastrar com código</a>
 
       <div class="codigo-section" id="codigoSection">
+        <label for="nomeUsuario">Nome de usuário</label>
+        <input type="text" id="nomeUsuario" placeholder="Digite seu nome de usuário" />
+
+        <label for="emailCadastro">E-mail</label>
+        <input type="email" id="emailCadastro" placeholder="Digite seu e-mail" />
+
         <label for="codigo">Código de acesso</label>
         <input type="text" id="codigo" placeholder="Digite seu código" />
+
         <button id="botaoCadastrar" class="disabled-button" disabled>Cadastrar</button>
+
         <p class="success-message" id="mensagemSucesso" style="display: none;">✅ Código válido! Conta cadastrada.</p>
         <p class="error-message" id="mensagemErro" style="display: none;">❌ Código inválido. Tente novamente.</p>
       </div>
@@ -219,12 +227,17 @@
       document.getElementById("codigoSection").style.display = "block";
     });
 
-    // Ativar botão quando o campo de código for preenchido
+    const nomeUsuarioInput = document.getElementById("nomeUsuario");
+    const emailCadastroInput = document.getElementById("emailCadastro");
     const codigoInput = document.getElementById("codigo");
     const botaoCadastrar = document.getElementById("botaoCadastrar");
 
-    codigoInput.addEventListener("input", () => {
-      if (codigoInput.value.trim() !== "") {
+    function validarCamposCadastro() {
+      if (
+        nomeUsuarioInput.value.trim() !== "" &&
+        emailCadastroInput.value.trim() !== "" &&
+        codigoInput.value.trim() !== ""
+      ) {
         botaoCadastrar.disabled = false;
         botaoCadastrar.classList.remove("disabled-button");
         botaoCadastrar.classList.add("enabled-button");
@@ -233,9 +246,12 @@
         botaoCadastrar.classList.remove("enabled-button");
         botaoCadastrar.classList.add("disabled-button");
       }
-    });
+    }
 
-    // Verificar código
+    nomeUsuarioInput.addEventListener("input", validarCamposCadastro);
+    emailCadastroInput.addEventListener("input", validarCamposCadastro);
+    codigoInput.addEventListener("input", validarCamposCadastro);
+
     botaoCadastrar.addEventListener("click", function () {
       const codigo = codigoInput.value.trim();
       const sucesso = document.getElementById("mensagemSucesso");
@@ -246,6 +262,12 @@
 
       if (codigo === "ABC123") {
         sucesso.style.display = "block";
+
+        // Redireciona para home-aluno.html após 1.5 segundos
+        setTimeout(() => {
+          window.location.href = "home-aluno.html";
+        }, 1500);
+
       } else {
         erro.style.display = "block";
       }
