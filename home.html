@@ -18,7 +18,7 @@
     }
 
     .navbar {
-      background-color: #3c2a7c;
+      background-color: #226680;
       padding: 15px 30px;
       display: flex;
       justify-content: space-between;
@@ -47,7 +47,7 @@
     }
 
     .nav-links a:hover {
-      background-color: #2d1e63;
+      background-color: #164253;
     }
 
     .dropdown, .dropdown-producao {
@@ -73,7 +73,7 @@
 
     .dropdown h3 {
       margin-bottom: 10px;
-      color: #3c2a7c;
+      color:#226680;
       font-size: 18px;
     }
 
@@ -83,7 +83,7 @@
     }
 
     .dropdown-producao button {
-      background-color: #3c2a7c;
+      background-color:#226680 ;
       color: white;
       border: none;
       padding: 10px;
@@ -95,7 +95,7 @@
     }
 
     .dropdown-producao button:hover {
-      background-color: #2d1e63;
+      background-color: #164253;
     }
 
     .container {
@@ -288,7 +288,7 @@
   <div class="navbar">
     <img src="images/lexus.png" alt="Logo Lexus" class="logo-img" />
     <div class="nav-links">
-      <a id="produzirBtn">Produzir</a>
+      
       <a href="chat.html">Chat</a>
       <a id="perfilBtn">Perfil</a>
       <a href="#">Sair</a>
@@ -300,10 +300,7 @@
         <p><strong>Código:</strong> ABC123</p>
       </div>
 
-      <div class="dropdown-producao" id="produzirDropdown">
-          <button onclick="window.location.href='fotografia.html'">📷 Fotografia</button>
-  <button onclick="window.location.href='podcast.html'">🎙️ Podcast</button>
-  <button onclick="window.location.href='tema.html'">📝 Tema Proposto</button>
+      
       </div>
     </div>
   </div>
@@ -332,8 +329,7 @@
   <script>
     const perfilBtn = document.getElementById("perfilBtn");
     const perfilDropdown = document.getElementById("perfilDropdown");
-    const produzirBtn = document.getElementById("produzirBtn");
-    const produzirDropdown = document.getElementById("produzirDropdown");
+    
 
     perfilBtn.addEventListener("click", () => {
       const isVisible = perfilDropdown.style.display === "block";
@@ -341,11 +337,7 @@
       produzirDropdown.style.display = "none";
     });
 
-    produzirBtn.addEventListener("click", () => {
-      const isVisible = produzirDropdown.style.display === "block";
-      produzirDropdown.style.display = isVisible ? "none" : "block";
-      perfilDropdown.style.display = "none";
-    });
+    
 
     window.addEventListener("click", function (e) {
       if (!perfilBtn.contains(e.target) && !perfilDropdown.contains(e.target)) {
@@ -365,7 +357,7 @@
         autor: "Ana Beatriz",
         data: "15 de Maio de 2025",
         texto: "A leitura abre portas para o conhecimento e nos ajuda a entender melhor o mundo ao nosso redor.",
-        imagem: "images/exempo7.jpg",
+        imagem: "images/exempo1.jpg",
       },
       {
         id: "r2",
@@ -374,16 +366,16 @@
         autor: "João Pedro",
         data: "10 de Maio de 2025",
         texto: "Quero ser engenheiro para construir pontes e ajudar minha cidade a crescer de forma sustentável.",
-        imagem: "images/exempo8.jpg",
+        imagem: "images/exempo3.jpg",
       },
       {
         id: "r3",
         tipo: "📝 Redação",
-        titulo: "A importância da amizade",
+        titulo: "O Valor da Dedicação nas Conquistas Pessoais",
         autor: "Mariana Costa",
         data: "20 de Maio de 2025",
-        texto: "Amigos são importantes para nos apoiar, divertir e crescer juntos, tornando a vida mais feliz.",
-        imagem: "images/exempo9.jpg",
+        texto: "Em uma sociedade que valoriza os resultados e as conquistas visíveis, como troféus e medalhas, muitas...",
+        imagem: "images/exempo2.jpg",
       },
       {
         id: "r4",
