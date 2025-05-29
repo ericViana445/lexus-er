@@ -21,8 +21,8 @@
 
     /* Navbar Lexus padrão do seu projeto */
     .navbar {
-      background-color: #3c2a7c;
-      padding: 15px 30px;
+      background-color: #226680;
+      padding: 5px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -40,12 +40,13 @@
     }
 
     .navbar .logo img {
-      height: 40px;
+      height: 90px;
     }
 
     .nav-links {
       display: flex;
       gap: 20px;
+      align-items: center;
     }
 
     .nav-links a {
@@ -59,7 +60,62 @@
     }
 
     .nav-links a:hover {
-      background-color: #2d1e63;
+      background-color: #164253;
+    }
+
+    /* Dropdown perfil */
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+      object-fit: cover;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      color: #333;
+      border: 1px solid #ccc;
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      z-index: 999;
+      min-width: 200px;
+      user-select: none;
+    }
+
+    .dropdown-menu p {
+      margin: 5px 0;
+    }
+
+    .dropdown-menu hr {
+      margin: 10px 0;
+      border-color: #ddd;
+    }
+
+    .dropdown-menu a {
+      text-decoration: none;
+      color: #3c2a7c;
+      font-weight: bold;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 6px 0;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #e74c3c;
     }
 
     /* Botão Chat extra */
@@ -331,16 +387,21 @@
 <body>
 
   <div class="navbar">
-    <a href="/" class="logo">
+    <a href="home-professor.html" class="logo">
       <img src="images/lexus.png" alt="Logo Lexus" />
-    
     </a>
     <div class="nav-links">
-      <a href="#">Produzir</a>
-      <a href="#">Chat</a>
-      <a href="#">Perfil</a>
-      <a href="#">Sair</a>
-      
+      <a href="chat.html">Chat</a>
+      <div class="profile-dropdown">
+        <img src="images/perfil2.png" alt="Perfil" class="profile-icon" onclick="toggleDropdown()" />
+        <div class="dropdown-menu" id="dropdownMenu">
+          <p><strong>Professor João</strong></p>
+          <p>joao@email.com</p>
+          <p>Código: 123456</p>
+          <hr />
+          <a href="index.html">🚪 Sair</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -406,91 +467,97 @@
     ];
 
     const contactList = document.getElementById('contactList');
-    const chatMessages = document.getElementById('chatMessages');
     const chatHeader = document.getElementById('chatHeader');
-    const chatContactName = chatHeader.querySelector('.chat-contact-name');
-    const chatContactAvatar = chatHeader.querySelector('img');
-    const messageInput = document.getElementById('messageInput');
-    const btnSend = document.querySelector('.btn-send');
+    const chatMessages = document.getElementById('chatMessages');
     const chatForm = document.getElementById('chatForm');
+    const messageInput = document.getElementById('messageInput');
 
-    let activeContactId = null;
+    let activeContact = null;
 
     function renderContacts() {
       contactList.innerHTML = '';
       contacts.forEach(contact => {
-        const contactDiv = document.createElement('div');
-        contactDiv.classList.add('contact');
-        if (contact.id === activeContactId) {
-          contactDiv.classList.add('active');
-        }
-        contactDiv.innerHTML = `
+        const div = document.createElement('div');
+        div.classList.add('contact');
+        div.dataset.id = contact.id;
+        div.innerHTML = `
           <img src="${contact.avatar}" alt="${contact.name}" />
           <div class="contact-info">
             <div class="contact-name">${contact.name}</div>
             <div class="contact-last-message">${contact.lastMessage}</div>
           </div>
         `;
-        contactDiv.addEventListener('click', () => {
-          activeContactId = contact.id;
-          renderContacts();
-          renderChat(contact);
-          messageInput.disabled = false;
-          btnSend.disabled = true;
-          messageInput.value = '';
-          messageInput.focus();
+        div.addEventListener('click', () => {
+          setActiveContact(contact.id);
         });
-        contactList.appendChild(contactDiv);
+        contactList.appendChild(div);
       });
     }
 
-    function renderChat(contact) {
-      chatContactName.textContent = contact.name;
-      chatContactAvatar.src = contact.avatar;
+    function setActiveContact(id) {
+      activeContact = contacts.find(c => c.id === id);
+
+      // Marca ativo no sidebar
+      document.querySelectorAll('.contact').forEach(c => {
+        c.classList.toggle('active', c.dataset.id == id);
+      });
+
+      // Atualiza header
+      chatHeader.querySelector('img').src = activeContact.avatar;
+      chatHeader.querySelector('.chat-contact-name').textContent = activeContact.name;
+
+      // Habilita input
+      messageInput.disabled = false;
+      chatForm.querySelector('button').disabled = false;
+      messageInput.focus();
+
+      renderMessages();
+    }
+
+    function renderMessages() {
       chatMessages.innerHTML = '';
-      contact.messages.forEach(msg => {
-        const msgDiv = document.createElement('div');
-        msgDiv.classList.add('message', msg.sent ? 'sent' : 'received');
-        msgDiv.textContent = msg.text;
-        chatMessages.appendChild(msgDiv);
+      activeContact.messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.classList.add('message');
+        div.classList.add(msg.sent ? 'sent' : 'received');
+        div.textContent = msg.text;
+        chatMessages.appendChild(div);
       });
-      scrollToBottom();
-    }
-
-    function scrollToBottom() {
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-
-    messageInput.addEventListener('input', () => {
-      btnSend.disabled = !messageInput.value.trim();
-    });
 
     chatForm.addEventListener('submit', e => {
       e.preventDefault();
       const text = messageInput.value.trim();
-      if (!text || activeContactId === null) return;
+      if (!text) return;
 
-      const contact = contacts.find(c => c.id === activeContactId);
-      contact.messages.push({ text, sent: true, timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
-      contact.lastMessage = text;
+      // Adiciona mensagem enviada
+      activeContact.messages.push({ text, sent: true, timestamp: new Date().toLocaleTimeString() });
+      activeContact.lastMessage = text;
 
-      renderChat(contact);
+      renderMessages();
       renderContacts();
 
       messageInput.value = '';
-      btnSend.disabled = true;
       messageInput.focus();
-
-      setTimeout(() => {
-        const replyText = "Recebi sua mensagem!";
-        contact.messages.push({ text: replyText, sent: false, timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
-        contact.lastMessage = replyText;
-        renderChat(contact);
-        renderContacts();
-      }, 1500);
     });
 
+    // Inicializa contatos
     renderContacts();
+
+    // Dropdown do perfil
+    function toggleDropdown() {
+      const menu = document.getElementById('dropdownMenu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    window.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('dropdownMenu');
+      const profile = document.querySelector('.profile-icon');
+      if (!profile.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
   </script>
 </body>
 </html>
