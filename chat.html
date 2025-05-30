@@ -64,59 +64,36 @@
     }
 
     /* Dropdown perfil */
-    .profile-dropdown {
-      position: relative;
-      display: inline-block;
-    }
+    .perfil-foto {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid white;
+  transition: transform 0.3s;
+}
 
-    .profile-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid white;
-      object-fit: cover;
-    }
+.perfil-foto:hover {
+  transform: scale(1.05);
+}
 
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      right: 0;
-      background-color: white;
-      color: #333;
-      border: 1px solid #ccc;
-      padding: 10px 15px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      z-index: 999;
-      min-width: 200px;
-      user-select: none;
-    }
+.sair-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.3s;
+}
 
-    .dropdown-menu p {
-      margin: 5px 0;
-    }
+.sair-btn:hover {
+  background-color: #c0392b;
+}
 
-    .dropdown-menu hr {
-      margin: 10px 0;
-      border-color: #ddd;
-    }
-
-    .dropdown-menu a {
-      text-decoration: none;
-      color: #3c2a7c;
-      font-weight: bold;
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      padding: 6px 0;
-      border-radius: 5px;
-      transition: background-color 0.2s;
-    }
-
-    .dropdown-menu a:hover {
-      background-color: #e74c3c;
-    }
 
     /* Botão Chat extra */
     .btn-chat {
@@ -392,15 +369,15 @@
     </a>
     <div class="nav-links">
       <a href="chat.html">Chat</a>
-      <div class="profile-dropdown">
-        <img src="images/perfil2.png" alt="Perfil" class="profile-icon" onclick="toggleDropdown()" />
-        <div class="dropdown-menu" id="dropdownMenu">
-          <p><strong>Professor João</strong></p>
-          <p>joao@email.com</p>
-          <p>Código: 123456</p>
-          <hr />
-          <a href="index.html">🚪 Sair</a>
-        </div>
+       <img src="images/perfil2.png" alt="Foto de perfil" id="perfilBtn" class="perfil-foto" />
+
+    <div class="dropdown" id="perfilDropdown">
+      <h3>👤 Perfil do Professor</h3>
+      <p><strong>Nome:</strong> João da Silva</p>
+      <p><strong>E-mail:</strong> joao.professor@escola.com</p>
+      <p><strong>Código:</strong> ABC123</p>
+      <button onclick="window.location.href='index.html'" class="sair-btn">🚪 Sair</button>
+    </div>
       </div>
     </div>
   </div>
@@ -546,18 +523,28 @@
     renderContacts();
 
     // Dropdown do perfil
-    function toggleDropdown() {
-      const menu = document.getElementById('dropdownMenu');
-      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-    }
+    
+    const perfilBtn = document.getElementById("perfilBtn");
+    const perfilDropdown = document.getElementById("perfilDropdown");
+    
 
-    window.addEventListener('click', function(e) {
-      const dropdown = document.getElementById('dropdownMenu');
-      const profile = document.querySelector('.profile-icon');
-      if (!profile.contains(e.target) && !dropdown.contains(e.target)) {
-        dropdown.style.display = 'none';
+    perfilBtn.addEventListener("click", () => {
+      const isVisible = perfilDropdown.style.display === "block";
+      perfilDropdown.style.display = isVisible ? "none" : "block";
+      produzirDropdown.style.display = "none";
+    });
+
+    
+
+    window.addEventListener("click", function (e) {
+      if (!perfilBtn.contains(e.target) && !perfilDropdown.contains(e.target)) {
+        perfilDropdown.style.display = "none";
+      }
+      if (!produzirBtn.contains(e.target) && !produzirDropdown.contains(e.target)) {
+        produzirDropdown.style.display = "none";
       }
     });
+
   </script>
 </body>
 </html>
