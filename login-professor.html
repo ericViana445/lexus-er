@@ -75,12 +75,6 @@
       margin: 0 auto 30px;
     }
 
-    .divider {
-      height: 1px;
-      background: #eee;
-      margin-bottom: 20px;
-    }
-
     label {
       font-size: 14px;
       margin-bottom: 5px;
@@ -182,8 +176,12 @@
       <a class="link-codigo" id="mostrarCodigo" style="margin-bottom:20px; display:inline-block; cursor:pointer; color:#3c2a7c; text-align:center;">🔐 Criar código</a>
 
       <div class="codigo-section" id="codigoSection" style="display:none;">
-        <label for="usuarioCriarCodigo">Usuário ou e-mail para gerar código</label>
-        <input type="email" id="usuarioCriarCodigo" placeholder="Digite seu usuário ou e-mail" />
+        <label for="usuarioNome">Nome de usuário</label>
+        <input type="text" id="usuarioNome" placeholder="Digite seu nome de usuário" />
+
+        <label for="usuarioEmail">E-mail</label>
+        <input type="email" id="usuarioEmail" placeholder="Digite seu e-mail" />
+
         <button class="generate-button" id="gerarCodigoBtn" disabled>Gerar Código</button>
         <div class="codigo-gerado" id="codigoGerado"></div>
         <button id="btnIrHome">Continuar</button>
@@ -194,57 +192,54 @@
   <script>
     const mostrarCodigo = document.getElementById('mostrarCodigo');
     const codigoSection = document.getElementById('codigoSection');
-    const usuarioCriarCodigo = document.getElementById('usuarioCriarCodigo');
+    const usuarioNome = document.getElementById('usuarioNome');
+    const usuarioEmail = document.getElementById('usuarioEmail');
     const gerarCodigoBtn = document.getElementById('gerarCodigoBtn');
     const codigoGerado = document.getElementById('codigoGerado');
     const btnIrHome = document.getElementById('btnIrHome');
 
-    // Mostrar a seção para criar código
     mostrarCodigo.addEventListener('click', () => {
       codigoSection.style.display = 'block';
     });
 
-    // Habilitar botão gerar código só se usuário não estiver vazio e email válido
-    usuarioCriarCodigo.addEventListener('input', () => {
-      const valor = usuarioCriarCodigo.value.trim();
-      // simples validação de email (pode ajustar conforme necessidade)
-      const emailValido = valor.includes('@') && valor.includes('.');
-      gerarCodigoBtn.disabled = !emailValido;
-      // limpa código e botão se usuário mudar
+    function validarCamposGerarCodigo() {
+      const nomeValido = usuarioNome.value.trim().length >= 3;
+      const email = usuarioEmail.value.trim();
+      const emailValido = email.includes('@') && email.includes('.');
+      gerarCodigoBtn.disabled = !(nomeValido && emailValido);
       codigoGerado.textContent = '';
       btnIrHome.style.display = 'none';
-      gerarCodigoBtn.disabled = !emailValido;
-    });
+    }
 
-    // Função para gerar código único simples (8 caracteres alfanuméricos)
+    usuarioNome.addEventListener('input', validarCamposGerarCodigo);
+    usuarioEmail.addEventListener('input', validarCamposGerarCodigo);
+
     function gerarCodigoUnico() {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       let codigo = '';
-      for(let i = 0; i < 8; i++) {
+      for (let i = 0; i < 8; i++) {
         codigo += chars.charAt(Math.floor(Math.random() * chars.length));
       }
       return codigo;
     }
 
     gerarCodigoBtn.addEventListener('click', () => {
-      const usuario = usuarioCriarCodigo.value.trim();
-      if (!usuario) return;
+      const nome = usuarioNome.value.trim();
+      const email = usuarioEmail.value.trim();
+      if (!nome || !email) return;
 
       const codigo = gerarCodigoUnico();
-
       codigoGerado.style.display = 'block';
       codigoGerado.textContent = `Seu código gerado: ${codigo}`;
-
       gerarCodigoBtn.disabled = true;
-
       btnIrHome.style.display = 'block';
     });
 
     btnIrHome.addEventListener('click', () => {
-      // Redireciona para a página home (mude o link conforme seu sistema)
       window.location.href = 'home.html';
     });
   </script>
 
 </body>
 </html>
+
