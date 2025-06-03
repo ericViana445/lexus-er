@@ -317,13 +317,15 @@
         </div>
     </div>
 
-    <div class="container">
-        <h1>Mural de Destaques Nota 1000</h1>
-        <div class="mural" id="destaquesMural"></div>
-    </div>
+    <!--
+<div class="container">
+  <h1>Mural de Destaques Nota 1000</h1>
+  <div class="mural" id="destaquesMural"></div>
+</div>
+-->
 
     <div class="container">
-        <h1>Mural de Todas as Redações Publicadas</h1>
+        <h1>Textos Publicados</h1>
         <div class="mural" id="todasRedacoesMural"></div>
     </div>
 
@@ -348,48 +350,37 @@
         });
 
         const redacoes = [{
-            id: "r1",
-            tipo: "📝 Redação",
-            titulo: "A importância da leitura",
-            autor: "Ana Beatriz",
-            data: "15 de Maio de 2025",
-            texto: "A leitura abre portas para o conhecimento...",
+            tipo: "📝 Tema",
+            titulo: "Meu Lugar Favorito",
+            autor: "Maria Eduarda",
+            data: "27 de Maio de 2025",
+            texto: "Gosto de visitar a praça perto de casa, onde posso brincar, ler e conversar com amigos. É um espaço que me faz sentir em paz.",
             imagem: "images/exempo1.jpg"
         }, {
-            id: "r2",
-            tipo: "📝 Redação",
-            titulo: "Meus sonhos para o futuro",
-            autor: "João Pedro",
-            data: "10 de Maio de 2025",
-            texto: "Quero ser engenheiro para construir pontes...",
-            imagem: "images/exempo3.jpg"
-        }, {
-            id: "r3",
-            tipo: "📝 Redação",
-            titulo: "O Valor da Dedicação",
-            autor: "Mariana Costa",
-            data: "20 de Maio de 2025",
-            texto: "Em uma sociedade que valoriza os resultados...",
+            tipo: "🎧 Podcast",
+            titulo: "O som da minha cidade",
+            autor: "Lucas Oliveira",
+            data: "25 de Maio de 2025",
+            texto: "Gravei um podcast sobre os sons que mais escuto: o apito do trem, os cachorros e a feira de domingo. Um retrato sonoro da minha comunidade.",
             imagem: "images/exempo2.jpg"
         }, {
-            id: "r4",
-            tipo: "📝 Redação",
-            titulo: "Como preservar o meio ambiente",
-            autor: "Carlos Mendes",
-            data: "18 de Maio de 2025",
-            texto: "Cuidar da natureza é fundamental...",
-            imagem: "images/exempo10.jpg"
+            tipo: "📝 Tema",
+            titulo: "A importância da leitura",
+            autor: "Maria Eduarda",
+            data: "24 de Maio de 2025",
+            texto: "Falei sobre como a leitura desenvolve o pensamento crítico e amplia o vocabulário. É um hábito que muda vidas!",
+            imagem: "images/minha1.jpg"
         }, {
-            id: "r5",
-            tipo: "📝 Redação",
-            titulo: "Minha cidade natal",
-            autor: "Juliana Freitas",
-            data: "12 de Maio de 2025",
-            texto: "Minha cidade tem lugares incríveis...",
-            imagem: "images/exempo11.jpg"
-        }, ];
+            tipo: "📷 Fotografia",
+            titulo: "Olhares para o céu",
+            autor: "Maria Eduarda",
+            data: "22 de Maio de 2025",
+            texto: "Capturei esse pôr do sol no campo. As cores do céu representam a beleza da natureza ao nosso redor.",
+            imagem: "images/minha2.jpg"
+        }];
 
-        const destaques = redacoes.filter(r => r.id === "r1" || r.id === "r3");
+
+        //const destaques = redacoes.filter(r => r.id === "r1" || r.id === "r3");
         const naoDestaques = redacoes.filter(r => r.id !== "r1" && r.id !== "r3");
 
         function shuffle(array) {
@@ -401,7 +392,8 @@
         }
 
         const aleatorias = shuffle(naoDestaques).slice(0, 2);
-        const muralCompleto = [...destaques, ...aleatorias];
+        const muralCompleto = shuffle(redacoes);
+
 
         function criarCard(r, comBotao = false) {
             return `
@@ -418,7 +410,7 @@
         </div>`;
     }
 
-    document.getElementById("destaquesMural").innerHTML = destaques.map(r => criarCard(r)).join('');
+    //document.getElementById("destaquesMural").innerHTML = destaques.map(r => criarCard(r)).join('');
     document.getElementById("todasRedacoesMural").innerHTML = muralCompleto.map(r => criarCard(r, true)).join('');
 
     const alunos = [
