@@ -1,245 +1,253 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login Professor - Lexus</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #226680;
-      display: flex;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .container {
-      display: flex;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      width: 90%;
-      max-width: 1000px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .left {
-      background-color: #3c2a7c;
-      color: white;
-      flex: 1;
-      padding: 40px 20px;
-      text-align: center;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-    }
-
-    .left-phrase {
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 30px;
-      padding: 0 10px;
-      line-height: 1.4;
-      margin-top: 10px;
-    }
-
-    .left .prof-img {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      max-height: 75%;
-    }
-
-    .right {
-      background: white;
-      flex: 1;
-      padding: 40px 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .logo-img {
-      width: 130px;
-      margin: 0 auto 30px;
-    }
-
-    label {
-      font-size: 14px;
-      margin-bottom: 5px;
-      display: block;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #aaa;
-      border-radius: 5px;
-      margin-bottom: 15px;
-      font-size: 14px;
-    }
-
-    button {
-      border: none;
-      border-radius: 25px;
-      padding: 10px;
-      font-size: 14px;
-      cursor: pointer;
-      margin-bottom: 20px;
-      transition: background-color 0.3s ease;
-    }
-
-    .disabled-button {
-      width: 100%;
-      background: #ddd;
-      color: #999;
-      cursor: not-allowed;
-    }
-
-    .generate-button {
-      width: 100%;
-      background-color: #3c2a7c;
-      color: white;
-    }
-
-    .generate-button:disabled {
-      background-color: #888;
-      cursor: not-allowed;
-    }
-
-    #btnIrHome {
-      width: 100%;
-      background: #3c2a7c;
-      color: #fff;
-      display: none;
-    }
-
-    .codigo-gerado {
-      font-weight: bold;
-      color: green;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-
-      .left, .right {
-        flex: none;
-        width: 100%;
-      }
-
-      .left .prof-img {
-        position: relative;
-        transform: none;
-        left: auto;
-        bottom: auto;
-        margin-top: 20px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Professor - Lexus</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #226680;
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 90%;
+            max-width: 1000px;
+            height: 600px;
+            /* NOVO: altura fixa */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .left {
+            background-color: #3c2a7c;
+            color: white;
+            flex: 7;
+            /* NOVO: 70% */
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        
+        .left-phrase {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            padding: 0 10px;
+            line-height: 1.4;
+            margin-top: 10px;
+        }
+        
+        .left .prof-img {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: auto;
+            max-height: 80%;
+            object-fit: contain;
+        }
+        
+        .right {
+            background: white;
+            flex: 3;
+            /* NOVO: 30% */
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .logo-img {
+            width: 130px;
+            margin: 0 auto 30px;
+        }
+        
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        button {
+            border: none;
+            border-radius: 25px;
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .disabled-button {
+            width: 100%;
+            background: #ddd;
+            color: #999;
+            cursor: not-allowed;
+        }
+        
+        .generate-button {
+            width: 100%;
+            background-color: #3c2a7c;
+            color: white;
+        }
+        
+        .generate-button:disabled {
+            background-color: #888;
+            cursor: not-allowed;
+        }
+        
+        #btnIrHome {
+            width: 100%;
+            background: #3c2a7c;
+            color: #fff;
+            display: none;
+        }
+        
+        .codigo-gerado {
+            font-weight: bold;
+            color: green;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            .left,
+            .right {
+                flex: none;
+                width: 100%;
+            }
+            .left .prof-img {
+                position: relative;
+                transform: none;
+                left: auto;
+                bottom: auto;
+                margin-top: 20px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-  <div class="container">
-    <div class="left">
-      <h2 class="left-phrase">Bem-vindo, Professor! Prepare-se para transformar o aprendizado.</h2>
-      <img class="prof-img" src="images/professor.png" alt="Imagem Professor" />
+    <div class="container">
+        <div class="left">
+            <h2 class="left-phrase">Bem-vindo, Professor! Prepare-se para transformar o aprendizado.</h2>
+            <img class="prof-img" src="images/professor.png" alt="Imagem Professor" />
+        </div>
+
+        <div class="right">
+            <img class="logo-img" src="images/lexus-preto.png" alt="Logo Lexus" />
+
+            <!-- Campo usuário/email para login -->
+            <label for="email">Usuário ou e-mail</label>
+            <input type="email" id="email" placeholder="Digite seu usuário ou e-mail" />
+
+            <!-- Campo código senha -->
+            <label for="senha">Código</label>
+            <input type="password" id="senha" placeholder="Digite o código" />
+
+            <button class="disabled-button" disabled>Entrar</button>
+
+            <a class="link-codigo" id="mostrarCodigo" style="margin-bottom:20px; display:inline-block; cursor:pointer; color:#3c2a7c; text-align:center;">🔐 Criar código</a>
+
+            <div class="codigo-section" id="codigoSection" style="display:none;">
+                <label for="usuarioNome">Nome de usuário</label>
+                <input type="text" id="usuarioNome" placeholder="Digite seu nome de usuário" />
+
+                <label for="usuarioEmail">E-mail</label>
+                <input type="email" id="usuarioEmail" placeholder="Digite seu e-mail" />
+
+                <button class="generate-button" id="gerarCodigoBtn" disabled>Gerar Código</button>
+                <div class="codigo-gerado" id="codigoGerado"></div>
+                <button id="btnIrHome">Continuar</button>
+            </div>
+        </div>
     </div>
 
-    <div class="right">
-      <img class="logo-img" src="images/lexus.png" alt="Logo Lexus" />
+    <script>
+        const mostrarCodigo = document.getElementById('mostrarCodigo');
+        const codigoSection = document.getElementById('codigoSection');
+        const usuarioNome = document.getElementById('usuarioNome');
+        const usuarioEmail = document.getElementById('usuarioEmail');
+        const gerarCodigoBtn = document.getElementById('gerarCodigoBtn');
+        const codigoGerado = document.getElementById('codigoGerado');
+        const btnIrHome = document.getElementById('btnIrHome');
 
-      <!-- Campo usuário/email para login -->
-      <label for="email">Usuário ou e-mail</label>
-      <input type="email" id="email" placeholder="Digite seu usuário ou e-mail" />
+        mostrarCodigo.addEventListener('click', () => {
+            codigoSection.style.display = 'block';
+        });
 
-      <!-- Campo código senha -->
-      <label for="senha">Código</label>
-      <input type="password" id="senha" placeholder="Digite o código" />
+        function validarCamposGerarCodigo() {
+            const nomeValido = usuarioNome.value.trim().length >= 3;
+            const email = usuarioEmail.value.trim();
+            const emailValido = email.includes('@') && email.includes('.');
+            gerarCodigoBtn.disabled = !(nomeValido && emailValido);
+            codigoGerado.textContent = '';
+            btnIrHome.style.display = 'none';
+        }
 
-      <button class="disabled-button" disabled>Entrar</button>
+        usuarioNome.addEventListener('input', validarCamposGerarCodigo);
+        usuarioEmail.addEventListener('input', validarCamposGerarCodigo);
 
-      <a class="link-codigo" id="mostrarCodigo" style="margin-bottom:20px; display:inline-block; cursor:pointer; color:#3c2a7c; text-align:center;">🔐 Criar código</a>
+        function gerarCodigoUnico() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let codigo = '';
+            for (let i = 0; i < 8; i++) {
+                codigo += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return codigo;
+        }
 
-      <div class="codigo-section" id="codigoSection" style="display:none;">
-        <label for="usuarioNome">Nome de usuário</label>
-        <input type="text" id="usuarioNome" placeholder="Digite seu nome de usuário" />
+        gerarCodigoBtn.addEventListener('click', () => {
+            const nome = usuarioNome.value.trim();
+            const email = usuarioEmail.value.trim();
+            if (!nome || !email) return;
 
-        <label for="usuarioEmail">E-mail</label>
-        <input type="email" id="usuarioEmail" placeholder="Digite seu e-mail" />
+            const codigo = gerarCodigoUnico();
+            codigoGerado.style.display = 'block';
+            codigoGerado.textContent = `Seu código gerado: ${codigo}`;
+            gerarCodigoBtn.disabled = true;
+            btnIrHome.style.display = 'block';
+        });
 
-        <button class="generate-button" id="gerarCodigoBtn" disabled>Gerar Código</button>
-        <div class="codigo-gerado" id="codigoGerado"></div>
-        <button id="btnIrHome">Continuar</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const mostrarCodigo = document.getElementById('mostrarCodigo');
-    const codigoSection = document.getElementById('codigoSection');
-    const usuarioNome = document.getElementById('usuarioNome');
-    const usuarioEmail = document.getElementById('usuarioEmail');
-    const gerarCodigoBtn = document.getElementById('gerarCodigoBtn');
-    const codigoGerado = document.getElementById('codigoGerado');
-    const btnIrHome = document.getElementById('btnIrHome');
-
-    mostrarCodigo.addEventListener('click', () => {
-      codigoSection.style.display = 'block';
-    });
-
-    function validarCamposGerarCodigo() {
-      const nomeValido = usuarioNome.value.trim().length >= 3;
-      const email = usuarioEmail.value.trim();
-      const emailValido = email.includes('@') && email.includes('.');
-      gerarCodigoBtn.disabled = !(nomeValido && emailValido);
-      codigoGerado.textContent = '';
-      btnIrHome.style.display = 'none';
-    }
-
-    usuarioNome.addEventListener('input', validarCamposGerarCodigo);
-    usuarioEmail.addEventListener('input', validarCamposGerarCodigo);
-
-    function gerarCodigoUnico() {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let codigo = '';
-      for (let i = 0; i < 8; i++) {
-        codigo += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return codigo;
-    }
-
-    gerarCodigoBtn.addEventListener('click', () => {
-      const nome = usuarioNome.value.trim();
-      const email = usuarioEmail.value.trim();
-      if (!nome || !email) return;
-
-      const codigo = gerarCodigoUnico();
-      codigoGerado.style.display = 'block';
-      codigoGerado.textContent = `Seu código gerado: ${codigo}`;
-      gerarCodigoBtn.disabled = true;
-      btnIrHome.style.display = 'block';
-    });
-
-    btnIrHome.addEventListener('click', () => {
-      window.location.href = 'home.html';
-    });
-  </script>
+        btnIrHome.addEventListener('click', () => {
+            window.location.href = 'home.html';
+        });
+    </script>
 
 </body>
-</html>
 
+</html>
