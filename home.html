@@ -20,14 +20,26 @@
         
         .navbar {
             background-color: #226680;
-            padding: 5px 30px;
+            padding: 18px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .logo-img {
-            height: 90px;
+            max-height: 28px;
+            object-fit: contain;
+            transform: scale(1.4);
+            transform-origin: left center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.5);
         }
         
         .nav-links {
@@ -81,8 +93,7 @@
             background-color: #164253;
         }
         
-        .dropdown,
-        .dropdown-producao {
+        .dropdown {
             position: absolute;
             top: 60px;
             background-color: white;
@@ -91,16 +102,8 @@
             padding: 20px;
             display: none;
             z-index: 1000;
-        }
-        
-        .dropdown {
             right: 0;
             width: 260px;
-        }
-        
-        .dropdown-producao {
-            right: 100px;
-            width: 200px;
         }
         
         .dropdown h3 {
@@ -112,22 +115,6 @@
         .dropdown p {
             font-size: 14px;
             margin-bottom: 6px;
-        }
-        
-        .dropdown-producao button {
-            background-color: #226680;
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .dropdown-producao button:hover {
-            background-color: #164253;
         }
         
         .container {
@@ -218,7 +205,6 @@
             line-height: 1.6;
             flex-grow: 1;
         }
-        /* Botão Avaliar */
         
         .btn-avaliar {
             background-color: #1B4F72;
@@ -237,7 +223,6 @@
         .btn-avaliar:hover {
             background-color: #1B4F72;
         }
-        /* Lista de alunos */
         
         .alunos-container {
             max-width: 1300px;
@@ -303,8 +288,7 @@
                 gap: 10px;
                 margin-top: 10px;
             }
-            .dropdown,
-            .dropdown-producao {
+            .dropdown {
                 right: 30px;
                 left: auto;
             }
@@ -318,12 +302,10 @@
 <body>
 
     <div class="navbar">
-        <img src="images/lexus.png" alt="Logo Lexus" class="logo-img" />
+        <img src="images/lexus.png" alt="Logo Lexus" class="logo-img" onclick="window.location.href='home.html'" />
         <div class="nav-links">
             <a href="chat.html">Chat</a>
-
             <img src="images/perfil2.png" alt="Foto de perfil" id="perfilBtn" class="perfil-foto" />
-
             <div class="dropdown" id="perfilDropdown">
                 <h3>👤 Perfil do Professor</h3>
                 <p><strong>Nome:</strong> João da Silva</p>
@@ -336,97 +318,79 @@
 
     <div class="container">
         <h1>Mural de Destaques Nota 1000</h1>
-        <div class="mural" id="destaquesMural">
-            <!-- Destaques nota mil (2 redações) via JS -->
-        </div>
+        <div class="mural" id="destaquesMural"></div>
     </div>
 
     <div class="container">
         <h1>Mural de Todas as Redações Publicadas</h1>
-        <div class="mural" id="todasRedacoesMural">
-            <!-- Mural completo com 4 redações (2 destaques + 2 aleatórias) via JS -->
-        </div>
+        <div class="mural" id="todasRedacoesMural"></div>
     </div>
 
     <div class="alunos-container">
         <h1>Alunos Registrados na Sala</h1>
-        <div class="alunos-list" id="alunosList">
-            <!-- Alunos via JS -->
-        </div>
+        <div class="alunos-list" id="alunosList"></div>
     </div>
 
     <script>
         const perfilBtn = document.getElementById("perfilBtn");
         const perfilDropdown = document.getElementById("perfilDropdown");
 
-
         perfilBtn.addEventListener("click", () => {
             const isVisible = perfilDropdown.style.display === "block";
             perfilDropdown.style.display = isVisible ? "none" : "block";
-            produzirDropdown.style.display = "none";
         });
-
-
 
         window.addEventListener("click", function(e) {
             if (!perfilBtn.contains(e.target) && !perfilDropdown.contains(e.target)) {
                 perfilDropdown.style.display = "none";
             }
-            if (!produzirBtn.contains(e.target) && !produzirDropdown.contains(e.target)) {
-                produzirDropdown.style.display = "none";
-            }
         });
 
-        // Dados das redações
         const redacoes = [{
             id: "r1",
             tipo: "📝 Redação",
             titulo: "A importância da leitura",
             autor: "Ana Beatriz",
             data: "15 de Maio de 2025",
-            texto: "A leitura abre portas para o conhecimento e nos ajuda a entender melhor o mundo ao nosso redor.",
-            imagem: "images/exempo1.jpg",
+            texto: "A leitura abre portas para o conhecimento...",
+            imagem: "images/exempo1.jpg"
         }, {
             id: "r2",
             tipo: "📝 Redação",
             titulo: "Meus sonhos para o futuro",
             autor: "João Pedro",
             data: "10 de Maio de 2025",
-            texto: "Quero ser engenheiro para construir pontes e ajudar minha cidade a crescer de forma sustentável.",
-            imagem: "images/exempo3.jpg",
+            texto: "Quero ser engenheiro para construir pontes...",
+            imagem: "images/exempo3.jpg"
         }, {
             id: "r3",
             tipo: "📝 Redação",
-            titulo: "O Valor da Dedicação nas Conquistas Pessoais",
+            titulo: "O Valor da Dedicação",
             autor: "Mariana Costa",
             data: "20 de Maio de 2025",
-            texto: "Em uma sociedade que valoriza os resultados e as conquistas visíveis, como troféus e medalhas, muitas...",
-            imagem: "images/exempo2.jpg",
+            texto: "Em uma sociedade que valoriza os resultados...",
+            imagem: "images/exempo2.jpg"
         }, {
             id: "r4",
             tipo: "📝 Redação",
             titulo: "Como preservar o meio ambiente",
             autor: "Carlos Mendes",
             data: "18 de Maio de 2025",
-            texto: "Cuidar da natureza é fundamental para garantir um futuro saudável para as próximas gerações.",
-            imagem: "images/exempo10.jpg",
+            texto: "Cuidar da natureza é fundamental...",
+            imagem: "images/exempo10.jpg"
         }, {
             id: "r5",
             tipo: "📝 Redação",
             titulo: "Minha cidade natal",
             autor: "Juliana Freitas",
             data: "12 de Maio de 2025",
-            texto: "Minha cidade tem lugares incríveis para visitar e pessoas muito acolhedoras.",
-            imagem: "images/exempo11.jpg",
+            texto: "Minha cidade tem lugares incríveis...",
+            imagem: "images/exempo11.jpg"
         }, ];
 
-        // IDs das 2 redações destaque nota 1000
         const destaques = redacoes.filter(r => r.id === "r1" || r.id === "r3");
-
-        // Redações que não são destaques
         const naoDestaques = redacoes.filter(r => r.id !== "r1" && r.id !== "r3");
 
-        // Função para embaralhar array (Fisher-Yates)
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -435,72 +399,36 @@
             return array;
         }
 
-        // Pegar 2 aleatórias dentre as não destaques
         const aleatorias = shuffle(naoDestaques).slice(0, 2);
-
-        // Mural completo com destaques + aleatórias
         const muralCompleto = [...destaques, ...aleatorias];
 
-        // Função para criar card HTML de uma redação
-        function criarCard(redacao, comBotaoAvaliar = false) {
+        function criarCard(r, comBotao = false) {
             return `
-      <div class="card">
-        <img src="${redacao.imagem}" alt="Imagem da redação ${redacao.titulo}" />
-        <div class="card-content">
-          <div class="tag">${redacao.tipo}</div>
-          <h3>${redacao.titulo}</h3>
-          <div class="autor"><strong>Autor:</strong> ${redacao.autor}</div>
-          <div class="data"><strong>Data:</strong> ${redacao.data}</div>
-          <p>${redacao.texto}</p>
-          ${comBotaoAvaliar ? `<button class="btn-avaliar" onclick="avaliarRedacao('${redacao.id}')">Avaliar</button>` : ""}
-        </div>
-      </div>`;
+        <div class="card">
+          <img src="${r.imagem}" alt="Imagem da redação ${r.titulo}" />
+          <div class="card-content">
+            <div class="tag">${r.tipo}</div>
+            <h3>${r.titulo}</h3>
+            <div class="autor"><strong>Autor:</strong> ${r.autor}</div>
+            <div class="data"><strong>Data:</strong> ${r.data}</div>
+            <p>${r.texto}</p>
+            ${comBotao ? `<button class="btn-avaliar" onclick="avaliarRedacao('${r.id}')">Avaliar</button>` : ''}
+          </div>
+        </div>`;
     }
 
-    // Inserir cards no mural de destaques (sem botão avaliar)
-    const destaquesMural = document.getElementById("destaquesMural");
-    destaques.forEach(r => {
-      destaquesMural.innerHTML += criarCard(r, false);
-    });
+    document.getElementById("destaquesMural").innerHTML = destaques.map(r => criarCard(r)).join('');
+    document.getElementById("todasRedacoesMural").innerHTML = muralCompleto.map(r => criarCard(r, true)).join('');
 
-    // Inserir cards no mural completo (com botão avaliar)
-    const todasRedacoesMural = document.getElementById("todasRedacoesMural");
-    muralCompleto.forEach(r => {
-      todasRedacoesMural.innerHTML += criarCard(r, true);
-    });
-
-    // Dados dos alunos
     const alunos = [
-  {
-    id: "aluno1",
-    nome: "Maria Eduarda",
-    foto: "images/perfil1.png"
-  },
-  {
-    id: "aluno2",
-    nome: "Lucas Oliveira",
-    foto: "images/perfil2.png"
-  },
-  {
-    id: "aluno3",
-    nome: "Ana Beatriz",
-    foto: "images/perfil3.png"
-  },
-  {
-    id: "aluno4",
-    nome: "João Pedro",
-    foto: "images/perfil4.png"
-  },
-  {
-    id: "aluno5",
-    nome: "Laura Souza",
-    foto: "images/perfil5.png"
-  }
-];
-
+      { id: "a1", nome: "Maria Eduarda", foto: "images/perfil1.png" },
+      { id: "a2", nome: "Lucas Oliveira", foto: "images/perfil2.png" },
+      { id: "a3", nome: "Ana Beatriz", foto: "images/perfil3.png" },
+      { id: "a4", nome: "João Pedro", foto: "images/perfil4.png" },
+      { id: "a5", nome: "Laura Souza", foto: "images/perfil5.png" }
+    ];
 
     const alunosList = document.getElementById("alunosList");
-
     alunos.forEach((aluno) => {
       const card = document.createElement("div");
       card.className = "aluno-card";
@@ -513,7 +441,6 @@
     });
 
     function abrirChat(nomeAluno) {
-      // Redirecionar para chat.html com query param nomeAluno
       const url = new URL(window.location.origin + "/chat.html");
       url.searchParams.set("aluno", nomeAluno);
       window.location.href = url.toString();
@@ -521,7 +448,6 @@
 
     function avaliarRedacao(id) {
       alert(`Avaliar redação: ${id}`);
-      // Aqui pode abrir modal ou redirecionar para página de avaliação, etc.
     }
     </script>
 
