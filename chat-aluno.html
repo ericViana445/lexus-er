@@ -185,10 +185,14 @@
             transition: background-color 0.2s;
         }
         
-        .contact:hover,
         .contact.active {
-            background-color: #1B4F72;
-            color: white;
+            background-color: white;
+            color: black;
+        }
+        
+        .contact:hover {
+            background-color: #e3e3f1;
+            color: black;
         }
         
         .contact img {
@@ -202,7 +206,7 @@
         }
         
         .contact.active img {
-            border-color: white;
+            background-color: #226680;
         }
         
         .contact-info {
@@ -216,7 +220,7 @@
         
         .contact-last-message {
             font-size: 14px;
-            color: white;
+            color: black;
             margin-top: 3px;
             white-space: nowrap;
             overflow: hidden;
@@ -440,7 +444,7 @@
             id: 1,
             name: 'Prof. João da Silva',
             avatar: 'images/perfil4.png',
-            lastMessage: 'Obrigado!',
+            lastMessage: 'De nada!',
             messages: [{
                 text: 'Obrigado!',
                 sent: true

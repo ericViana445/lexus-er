@@ -162,10 +162,14 @@
             transition: background-color 0.2s;
         }
         
-        .contact:hover,
         .contact.active {
-            background-color: #1B4F72;
-            color: white;
+            background-color: white;
+            color: black;
+        }
+        
+        .contact:hover {
+            background-color: #e3e3f1;
+            color: black;
         }
         
         .contact img {
@@ -370,13 +374,23 @@
     <div class="chat-container">
         <aside class="chat-sidebar">
             <div class="sidebar-header">Contatos</div>
-            <div class="contact-list" id="contactList"></div>
+            <div class="contact-list" id="contactList">
+                <div class="contact" onclick="selectContact('', 'images/perfil1.png')">
+                    <img src="images/perfil1.png" alt="Maria Eduarda" />
+                    <div class="contact-info">
+                        <div class="contact-name">Maria Eduarda</div>
+                        <div class="contact-last-message">De nada!</div>
+                    </div>
+                </div>
+            </div>
+
         </aside>
 
         <main class="chat-main">
             <header class="chat-header" id="chatHeader">
-                <img src="" alt="Avatar do contato" />
-                <div class="chat-contact-name">Selecione um contato</div>
+                <img src="images/perfil1.png" alt="Foto de perfil" id="perfilBtn" class="perfil-foto" />
+
+                <div class="chat-contact-name">Maria Eduarda</div>
             </header>
             <section class="chat-messages" id="chatMessages"></section>
             <form class="chat-input" id="chatForm">
@@ -387,33 +401,111 @@
     </div>
 
     <script>
-        const tipoUsuario = "professor"; // ou "aluno"
-        document.getElementById("logoLexus").addEventListener("click", () => {
-            if (tipoUsuario === "professor") {
-                window.location.href = "home.html";
-            } else {
-                window.location.href = "home-aluno.html";
+        document.addEventListener("DOMContentLoaded", () => {
+            const tipoUsuario = "professor";
+
+            document.getElementById("logoLexus").addEventListener("click", () => {
+                window.location.href = tipoUsuario === "professor" ? "./home.html" : "./home-aluno.html";
+            });
+
+            const contacts = [{
+                id: 1,
+                name: 'Maria Eduarda',
+                avatar: 'images/perfil1.png',
+                lastMessage: 'Obrigada!',
+                messages: [{
+                    text: 'Obrigado!',
+                    sent: false
+                }, {
+                    text: 'De nada!',
+                    sent: true
+                }]
+            }];
+
+            const contactList = document.getElementById('contactList');
+            const chatMessages = document.getElementById('chatMessages');
+            const chatHeader = document.getElementById('chatHeader');
+            const chatContactName = chatHeader.querySelector('.chat-contact-name');
+            const chatContactAvatar = chatHeader.querySelector('img');
+            const messageInput = document.getElementById('messageInput');
+            const btnSend = document.querySelector('.btn-send');
+            const chatForm = document.getElementById('chatForm');
+
+            function renderContacts() {
+                contactList.innerHTML = '';
+                const contact = contacts[0];
+                const div = document.createElement('div');
+                div.className = 'contact active';
+                div.innerHTML = `
+                <img src="${contact.avatar}" alt="${contact.name}" />
+                <div class="contact-info">
+                    <div class="contact-name">${contact.name}</div>
+                    <div class="contact-last-message">${contact.lastMessage}</div>
+                </div>`;
+                contactList.appendChild(div);
             }
-        });
 
-        // Dropdown
-        const perfilBtn = document.getElementById("perfilBtn");
-        const perfilDropdown = document.getElementById("perfilDropdown");
-
-        perfilBtn.addEventListener("click", () => {
-            const isVisible = perfilDropdown.style.display === "block";
-            perfilDropdown.style.display = isVisible ? "none" : "block";
-        });
-
-        window.addEventListener("click", function(e) {
-            if (!perfilBtn.contains(e.target) && !perfilDropdown.contains(e.target)) {
-                perfilDropdown.style.display = "none";
+            function renderChat(contact) {
+                chatContactName.textContent = contact.name;
+                chatContactAvatar.src = contact.avatar;
+                chatMessages.innerHTML = '';
+                contact.messages.forEach(msg => {
+                    const div = document.createElement('div');
+                    div.className = `message ${msg.sent ? 'sent' : 'received'}`;
+                    div.textContent = msg.text;
+                    chatMessages.appendChild(div);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
             }
-        });
 
-        // Chat (mesma lógica anterior)
-        // ... Aqui entra o mesmo JS de renderização de contatos e mensagens que você já tem ...
+            chatForm.addEventListener('submit', e => {
+                e.preventDefault();
+                const text = messageInput.value.trim();
+                if (!text) return;
+                const contact = contacts[0];
+                contact.messages.push({
+                    text,
+                    sent: true
+                });
+                contact.lastMessage = text;
+                renderChat(contact);
+                renderContacts();
+                messageInput.value = '';
+                btnSend.disabled = true;
+                setTimeout(() => {
+                    contact.messages.push({
+                        text: 'Recebi sua mensagem!',
+                        sent: false
+                    });
+                    contact.lastMessage = 'Recebi sua mensagem!';
+                    renderChat(contact);
+                    renderContacts();
+                }, 1500);
+            });
+
+            messageInput.addEventListener('input', () => {
+                btnSend.disabled = !messageInput.value.trim();
+            });
+
+            renderContacts();
+            renderChat(contacts[0]);
+            messageInput.disabled = false;
+
+            const perfilBtn = document.getElementById("perfilBtn");
+            const perfilDropdown = document.getElementById("perfilDropdown");
+
+            perfilBtn.addEventListener("click", () => {
+                perfilDropdown.style.display = perfilDropdown.style.display === "block" ? "none" : "block";
+            });
+
+            window.addEventListener("click", function(e) {
+                if (!perfilBtn.contains(e.target) && !perfilDropdown.contains(e.target)) {
+                    perfilDropdown.style.display = "none";
+                }
+            });
+        });
     </script>
+
 </body>
 
 </html>

@@ -180,6 +180,20 @@
             font-weight: bold;
             margin-bottom: 12px;
             align-self: flex-start;
+            white-space: nowrap;
+        }
+        
+        .nota {
+            display: inline-block;
+            background-color: #1B4F72;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            align-self: flex-start;
+            white-space: nowrap;
         }
         
         .card h3 {
@@ -222,7 +236,7 @@
         }
         
         .btn-avaliar:hover {
-            background-color: #1B4F72;
+            background-color: #163e5d;
         }
         
         .alunos-container {
@@ -279,7 +293,7 @@
         }
         
         .btn-msg:hover {
-            background-color: #1B4F72;
+            background-color: #163e5d;
         }
         
         @media (max-width: 600px) {
@@ -317,13 +331,6 @@
         </div>
     </div>
 
-    <!--
-<div class="container">
-  <h1>Mural de Destaques Nota 1000</h1>
-  <div class="mural" id="destaquesMural"></div>
-</div>
--->
-
     <div class="container">
         <h1>📝 Textos Publicados</h1>
         <div class="mural" id="todasRedacoesMural"></div>
@@ -355,63 +362,51 @@
             autor: "Maria Eduarda",
             data: "27 de Maio de 2025",
             texto: "Gosto de visitar a praça perto de casa, onde posso brincar, ler e conversar com amigos. É um espaço que me faz sentir em paz.",
-            imagem: "images/exempo1.jpg"
+            imagem: "images/exempo1.jpg",
+            nota: "8/10"
         }, {
             tipo: "🎧 Podcast",
             titulo: "O som da minha cidade",
             autor: "Lucas Oliveira",
             data: "25 de Maio de 2025",
             texto: "Gravei um podcast sobre os sons que mais escuto: o apito do trem, os cachorros e a feira de domingo. Um retrato sonoro da minha comunidade.",
-            imagem: "images/exempo2.jpg"
+            imagem: "images/exempo2.jpg",
+            nota: "7/10"
         }, {
             tipo: "📝 Tema",
             titulo: "A importância da leitura",
             autor: "Maria Eduarda",
             data: "24 de Maio de 2025",
             texto: "Falei sobre como a leitura desenvolve o pensamento crítico e amplia o vocabulário. É um hábito que muda vidas!",
-            imagem: "images/minha1.jpg"
+            imagem: "images/minha1.jpg",
+            nota: "9/10"
         }, {
             tipo: "📷 Fotografia",
             titulo: "Olhares para o céu",
             autor: "Maria Eduarda",
             data: "22 de Maio de 2025",
             texto: "Capturei esse pôr do sol no campo. As cores do céu representam a beleza da natureza ao nosso redor.",
-            imagem: "images/minha2.jpg"
+            imagem: "images/minha2.jpg",
+            nota: "5/10"
         }];
-
-
-        //const destaques = redacoes.filter(r => r.id === "r1" || r.id === "r3");
-        const naoDestaques = redacoes.filter(r => r.id !== "r1" && r.id !== "r3");
-
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        const aleatorias = shuffle(naoDestaques).slice(0, 2);
-        const muralCompleto = shuffle(redacoes);
-
 
         function criarCard(r, comBotao = false) {
             return `
         <div class="card">
           <img src="${r.imagem}" alt="Imagem da redação ${r.titulo}" />
           <div class="card-content">
-            <div class="tag">${r.tipo}</div>
+            <div class="tag">${r.tipo} </div>
+            <span class="nota">Nota: 5/10</span>
             <h3>${r.titulo}</h3>
             <div class="autor"><strong>Autor:</strong> ${r.autor}</div>
             <div class="data"><strong>Data:</strong> ${r.data}</div>
             <p>${r.texto}</p>
-            ${comBotao ? `<button class="btn-avaliar" onclick="avaliarRedacao('${r.id}')">Avaliar</button>` : ''}
+            ${comBotao ? `<button class="btn-avaliar" onclick="avaliarRedacao('${r.id ?? ''}')">Avaliar</button>` : ''}
           </div>
         </div>`;
     }
 
-    //document.getElementById("destaquesMural").innerHTML = destaques.map(r => criarCard(r)).join('');
-    document.getElementById("todasRedacoesMural").innerHTML = muralCompleto.map(r => criarCard(r, true)).join('');
+    document.getElementById("todasRedacoesMural").innerHTML = redacoes.map(r => criarCard(r, true)).join('');
 
     const alunos = [
       { id: "a1", nome: "Maria Eduarda", foto: "images/perfil1.png" },
