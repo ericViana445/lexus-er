@@ -371,7 +371,7 @@
             data: "25 de Maio de 2025",
             texto: "Gravei um podcast sobre os sons que mais escuto: o apito do trem, os cachorros e a feira de domingo. Um retrato sonoro da minha comunidade.",
             imagem: "images/exempo2.jpg",
-            nota: "7/10"
+            nota: ""
         }, {
             tipo: "📝 Tema",
             titulo: "A importância da leitura",
@@ -390,54 +390,103 @@
             nota: "5/10"
         }];
 
-        function criarCard(r, comBotao = false) {
+        function criarCard(r) {
+            const notaExistente = r.nota && r.nota.trim() !== "";
+            const notaDisplay = notaExistente ? `<span class="nota">Nota: ${r.nota}</span>` : '';
+            const botaoTexto = notaExistente ? "Editar Nota" : "Avaliar";
+
             return `
-        <div class="card">
-          <img src="${r.imagem}" alt="Imagem da redação ${r.titulo}" />
-          <div class="card-content">
-            <div class="tag">${r.tipo} </div>
-            <span class="nota">Nota: 5/10</span>
-            <h3>${r.titulo}</h3>
-            <div class="autor"><strong>Autor:</strong> ${r.autor}</div>
-            <div class="data"><strong>Data:</strong> ${r.data}</div>
-            <p>${r.texto}</p>
-            ${comBotao ? `<button class="btn-avaliar" onclick="avaliarRedacao('${r.id ?? ''}')">Avaliar</button>` : ''}
-          </div>
+        <div class="card" data-id="${r.id ?? ''}">
+            <img src="${r.imagem}" alt="Imagem da redação ${r.titulo}" />
+            <div class="card-content">
+                <div class="tag">${r.tipo}</div>
+                ${notaDisplay}
+                <h3>${r.titulo}</h3>
+                <div class="autor"><strong>Autor:</strong> ${r.autor}</div>
+                <div class="data"><strong>Data:</strong> ${r.data}</div>
+                <p>${r.texto}</p>
+                <button class="btn-avaliar" onclick="toggleNotaDropdown(this)">${botaoTexto}</button>
+                <div class="nota-dropdown" style="display:none; margin-top:10px;">
+                    <input type="number" min="0" max="10" placeholder="Digite a nota (0 a 10)" style="padding:6px; border-radius:6px; border:1px solid #ccc; width:80px;" />
+                    <button onclick="salvarNota(this)" style="margin-left:10px; padding:6px 12px; border:none; border-radius:6px; background-color:#1B4F72; color:white; cursor:pointer;">Salvar</button>
+                </div>
+            </div>
         </div>`;
-    }
+        }
 
-    document.getElementById("todasRedacoesMural").innerHTML = redacoes.map(r => criarCard(r, true)).join('');
+        document.getElementById("todasRedacoesMural").innerHTML = redacoes.map(r => criarCard(r)).join('');
 
-    const alunos = [
-      { id: "a1", nome: "Maria Eduarda", foto: "images/perfil1.png" },
-      { id: "a2", nome: "Lucas Oliveira", foto: "images/perfil2.png" },
-      { id: "a3", nome: "Ana Beatriz", foto: "images/perfil3.jpg" },
-      { id: "a4", nome: "João Pedro", foto: "images/perfil4.png" },
-      { id: "a5", nome: "Laura Souza", foto: "images/perfil5.jpg" }
-    ];
+        const alunos = [{
+            id: "a1",
+            nome: "Maria Eduarda",
+            foto: "images/perfil1.png"
+        }, {
+            id: "a2",
+            nome: "Lucas Oliveira",
+            foto: "images/perfil2.png"
+        }, {
+            id: "a3",
+            nome: "Ana Beatriz",
+            foto: "images/perfil3.jpg"
+        }, {
+            id: "a4",
+            nome: "João Pedro",
+            foto: "images/perfil4.png"
+        }, {
+            id: "a5",
+            nome: "Laura Souza",
+            foto: "images/perfil5.jpg"
+        }];
 
-    const alunosList = document.getElementById("alunosList");
-    alunos.forEach((aluno) => {
-      const card = document.createElement("div");
-      card.className = "aluno-card";
-      card.innerHTML = `
-        <img src="${aluno.foto}" alt="Foto do aluno ${aluno.nome}" />
-        <div class="aluno-nome">${aluno.nome}</div>
-        <button class="btn-msg" onclick="abrirChat('${aluno.nome}')">Enviar mensagem</button>
-      `;
-      alunosList.appendChild(card);
-    });
+        const alunosList = document.getElementById("alunosList");
+        alunos.forEach((aluno) => {
+            const card = document.createElement("div");
+            card.className = "aluno-card";
+            card.innerHTML = `
+            <img src="${aluno.foto}" alt="Foto do aluno ${aluno.nome}" />
+            <div class="aluno-nome">${aluno.nome}</div>
+            <button class="btn-msg" onclick="abrirChat('${aluno.nome}')">Enviar mensagem</button>
+        `;
+            alunosList.appendChild(card);
+        });
 
-    function abrirChat(nomeAluno) {
-      const url = new URL(window.location.origin + "/chat.html");
-      url.searchParams.set("aluno", nomeAluno);
-      window.location.href = url.toString();
-    }
+        function abrirChat(nomeAluno) {
+            const url = new URL(window.location.origin + "/chat.html");
+            url.searchParams.set("aluno", nomeAluno);
+            window.location.href = url.toString();
+        }
 
-    function avaliarRedacao(id) {
-      alert(`Avaliar redação: ${id}`);
-    }
+        function toggleNotaDropdown(botao) {
+            const card = botao.closest(".card");
+            const dropdown = card.querySelector(".nota-dropdown");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        function salvarNota(botaoSalvar) {
+            const card = botaoSalvar.closest(".card");
+            const input = card.querySelector(".nota-dropdown input");
+            const nota = input.value;
+
+            if (nota === "" || isNaN(nota) || nota < 0 || nota > 10) {
+                alert("Por favor, insira uma nota válida entre 0 e 10.");
+                return;
+            }
+
+            let notaSpan = card.querySelector(".nota");
+            if (!notaSpan) {
+                notaSpan = document.createElement("span");
+                notaSpan.className = "nota";
+                card.querySelector(".card-content").insertBefore(notaSpan, card.querySelector("h3"));
+            }
+            notaSpan.textContent = "Nota: " + nota;
+
+            const botao = card.querySelector(".btn-avaliar");
+            botao.textContent = "Editar Nota";
+
+            card.querySelector(".nota-dropdown").style.display = "none";
+        }
     </script>
+
 
 </body>
 
