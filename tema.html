@@ -145,10 +145,16 @@
         
         .container {
             display: flex;
-            flex-wrap: wrap;
-            padding: 40px;
-            gap: 30px;
             justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            flex-wrap: wrap;
         }
         
         .left-panel {
@@ -243,7 +249,7 @@
         }
         
         .btn-enviar:hover {
-            background-color: #2d1e63;
+            background-color: #164253;
         }
         
         @media (max-width: 768px) {
@@ -286,8 +292,8 @@
 
     <div class="container">
         <div class="left-panel">
-            <h2>Produção<br><small style="font-size:16px;color:#777">Temática: Tema Proposto - Atualidades</small></h2>
-            <input type="text" placeholder="Adicione um tema se quiser..." value="O impacto das redes sociais na saúde mental dos jovens">
+            <h2>Produção<br><small style="font-size:16px;color:#777">Produção por: Tema Proposto</small></h2>
+            <input type="text" placeholder="Adicione um tema se quiser...">
             <textarea id="textoRedacao" placeholder="Digite aqui seu texto..."></textarea>
             <div class="word-count" id="contadorPalavras">0 palavras</div>
             <div class="btn-wrapper">
@@ -295,79 +301,58 @@
             </div>
         </div>
 
-        <div class="upload-box">
-            <label for="upload" class="upload-label">
-        <strong>🎙️</strong><br>
-        Upload do áudio
-      </label>
-            <input type="file" id="upload" accept="audio/*" onchange="mostrarPreview(event)">
-            <audio id="preview" class="upload-preview" controls></audio>
-        </div>
-    </div>
+        <script>
+            // Lógica para definir a rota do logo
+            const tipoUsuario = "aluno"; // Altere para "professor" se necessário
 
-    <script>
-        // Lógica para definir a rota do logo
-        const tipoUsuario = "aluno"; // Altere para "professor" se necessário
+            document.getElementById("logoLexus").addEventListener("click", () => {
+                if (tipoUsuario === "professor") {
+                    window.location.href = "home.html";
+                } else {
+                    window.location.href = "home-aluno.html";
+                }
+            });
 
-        document.getElementById("logoLexus").addEventListener("click", () => {
-            if (tipoUsuario === "professor") {
-                window.location.href = "home.html";
-            } else {
-                window.location.href = "home-aluno.html";
+
+
+            function enviarRedacao() {
+                alert("Redação enviada com sucesso!");
             }
-        });
 
-        function mostrarPreview(event) {
-            const file = event.target.files[0];
-            const preview = document.getElementById("preview");
-            if (file) {
-                const url = URL.createObjectURL(file);
-                preview.src = url;
-                preview.style.display = "block";
-            } else {
-                preview.src = "";
-                preview.style.display = "none";
-            }
-        }
+            const texto = document.getElementById("textoRedacao");
+            const contador = document.getElementById("contadorPalavras");
 
-        function enviarRedacao() {
-            alert("Redação enviada com sucesso!");
-        }
+            texto.addEventListener("input", () => {
+                const palavras = texto.value.trim().split(/\s+/).filter(p => p !== "");
+                contador.textContent = `${palavras.length} palavra${palavras.length !== 1 ? 's' : ''}`;
+            });
 
-        const texto = document.getElementById("textoRedacao");
-        const contador = document.getElementById("contadorPalavras");
+            const perfilBtn = document.getElementById("perfilBtn");
+            const perfilDropdown = document.getElementById("perfilDropdown");
+            const produzirBtn = document.getElementById("produzirBtn");
+            const produzirDropdown = document.getElementById("produzirDropdown");
 
-        texto.addEventListener("input", () => {
-            const palavras = texto.value.trim().split(/\s+/).filter(p => p !== "");
-            contador.textContent = `${palavras.length} palavra${palavras.length !== 1 ? 's' : ''}`;
-        });
-
-        const perfilBtn = document.getElementById("perfilBtn");
-        const perfilDropdown = document.getElementById("perfilDropdown");
-        const produzirBtn = document.getElementById("produzirBtn");
-        const produzirDropdown = document.getElementById("produzirDropdown");
-
-        perfilBtn.addEventListener("click", () => {
-            const isVisible = perfilDropdown.style.display === "block";
-            perfilDropdown.style.display = isVisible ? "none" : "block";
-            produzirDropdown.style.display = "none";
-        });
-
-        produzirBtn.addEventListener("click", () => {
-            const isVisible = produzirDropdown.style.display === "block";
-            produzirDropdown.style.display = isVisible ? "none" : "block";
-            perfilDropdown.style.display = "none";
-        });
-
-        window.addEventListener("click", function(e) {
-            if (!perfilBtn.contains(e.target) && !perfilDropdown.contains(e.target)) {
-                perfilDropdown.style.display = "none";
-            }
-            if (!produzirBtn.contains(e.target) && !produzirDropdown.contains(e.target)) {
+            perfilBtn.addEventListener("click", () => {
+                const isVisible = perfilDropdown.style.display === "block";
+                perfilDropdown.style.display = isVisible ? "none" : "block";
                 produzirDropdown.style.display = "none";
-            }
-        });
-    </script>
+            });
+
+            produzirBtn.addEventListener("click", () => {
+                const isVisible = produzirDropdown.style.display === "block";
+                produzirDropdown.style.display = isVisible ? "none" : "block";
+                perfilDropdown.style.display = "none";
+            });
+
+            window.addEventListener("click", function(e) {
+                if (!perfilBtn.contains(e.target) && !perfilDropdown.contains(e.target)) {
+                    perfilDropdown.style.display = "none";
+                }
+                if (!produzirBtn.contains(e.target) && !produzirDropdown.contains(e.target)) {
+                    produzirDropdown.style.display = "none";
+                }
+            });
+        </script>
 
 </body>
 

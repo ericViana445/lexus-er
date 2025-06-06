@@ -145,10 +145,16 @@
         
         .container {
             display: flex;
-            flex-wrap: wrap;
-            padding: 40px;
-            gap: 30px;
             justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            flex-wrap: wrap;
         }
         
         .left-panel {
@@ -290,7 +296,7 @@
 
     <div class="container">
         <div class="left-panel">
-            <h2>Produção<br><small style="font-size:16px;color:#777">Temática: Fotografia - Atualidades</small></h2>
+            <h2>Produção<br><small style="font-size:16px;color:#777">Produção por: Fotografia</small></h2>
             <input type="text" placeholder="Adicione um tema se quiser...">
             <textarea id="textoRedacao" placeholder="Digite aqui seu texto..."></textarea>
             <div class="word-count" id="contadorPalavras">0 palavras</div>
@@ -362,13 +368,13 @@
         });
 
         // 👇 Redirecionamento dinâmico do logo Lexus
-        const tipoUsuario = "aluno"; // Altere para "professor" quando necessário
+        const tipoUsuario = "aluno"; // ou "professor"
 
         document.getElementById("logoLexus").addEventListener("click", () => {
-            if (tipoUsuario === "aluno") {
-                window.location.href = "home-aluno.html";
-            } else if (tipoUsuario === "professor") {
+            if (tipoUsuario === "professor") {
                 window.location.href = "home.html";
+            } else {
+                window.location.href = "home-aluno.html";
             }
         });
     </script>
